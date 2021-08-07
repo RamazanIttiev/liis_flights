@@ -27,7 +27,7 @@ const Title = styled.h1`
   font-size: 24;
   font-weight: 500;
   text-align: center;
-  color: ${props => props.theme.palette.primary.main};
+  color: ${props => props.theme.palette.primary};
 `;
 
 const Login = () => (
