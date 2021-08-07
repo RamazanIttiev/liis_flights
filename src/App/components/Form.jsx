@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import useRouter from '../../hooks/useRouter';
 
 const StyledForm = styled.form`
   display: flex;
@@ -71,8 +72,11 @@ const Form = () => {
     handleSubmit,
   } = useForm();
 
+  const router = useRouter();
+
   const formSubmit = data => {
     localStorage.setItem('userData', JSON.stringify(data));
+    router.push('/flights');
   };
 
   return (
