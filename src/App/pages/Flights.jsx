@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import FlightCard from '../components/FlightCard';
 import Slider from '../components/Slider';
 import Calendar from '../../assets/Calendar.svg';
@@ -44,7 +45,7 @@ const CalendarImg = styled.img`
   margin-left: 15px;
 `;
 
-const Date = styled.div`
+const DateWrapper = styled.div`
   display: flex;
   align-items: center;
   font-family: Source Sans Pro;
@@ -89,47 +90,61 @@ const Favourite = styled.div`
   }
 `;
 
-const Flights = () => (
-  // useEffect(async () => {
-  //   try {
-  //     const data = await fetch(
-  //       'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/UK/GBP/en-GB/?query=USA',
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
-  //           'X-RapidAPI-Key': '39e1463efbmsh1163ec1c6a2583ap158224jsn76ae20078a09',
-  //         },
-  //       },
-  //     );
+const Flights = () => {
+  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [flights, setFlights] = useState([]);
 
-  //     console.log(data);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }, []);
+  useEffect(async () => {
+    try {
+      const allFlights = await fetch(
+        `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/SFO-sky/LAX-sky/${date}`,
+        {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-key': '39e1463efbmsh1163ec1c6a2583ap158224jsn76ae20078a09',
+            'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
+          },
+        },
+      );
+      const response = await allFlights.json();
+      setFlights(response);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [date]);
 
-  <Wrapper>
-    <Base>
-      <Header>
-        <Title>
-          Вылеты <ArrowImg src={Arrow} />
-          SVO - JFK
-        </Title>
-        <Date>
-          07 июля 2020
-          <CalendarImg src={Calendar} />
-        </Date>
-      </Header>
-      <Slider />
-      <Favourite>
-        Добавлено в Избранное: <span>10 </span>
-        рейсов
-      </Favourite>
-      <FlightsWrapper>
-        <FlightCard />
-      </FlightsWrapper>
-    </Base>
-  </Wrapper>
-);
+  const handleChange = event => {
+    setDate(event.target.value);
+  };
+
+  return (
+    <Wrapper>
+      <Base>
+        <Header>
+          <Title>
+            Вылеты <ArrowImg src={Arrow} />
+            SVO - JFK
+          </Title>
+          <DateWrapper>
+            <input type="date" value={date} onChange={e => handleChange(e)} />
+            <CalendarImg src={Calendar} />
+          </DateWrapper>
+        </Header>
+        <Slider />
+        {flights.code !== 404 && (
+          <>
+            <Favourite>
+              Добавлено в Избранное: <span>10 </span>
+              рейсов
+            </Favourite>
+            <FlightsWrapper>
+              {flights.Places &&
+                flights.Places.map((flight, id) => <FlightCard {...flight} id={id} />)}
+            </FlightsWrapper>
+          </>
+        )}
+      </Base>
+    </Wrapper>
+  );
+};
 export default Flights;

@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect, useDispatch } from 'react-redux';
 import Plane from '../../assets/Plane.svg';
 import Arrow from '../../assets/Arrow.svg';
 import Heart from '../../assets/Heart.svg';
 import Dash from '../../assets/Dash.svg';
+// import addToFavourites from '../store/actions/favourites';
 
 const Wrapper = styled.div`
   position: relative;
@@ -89,29 +91,43 @@ const Price = styled.div`
     color: initial;
   }
 `;
-const FlightCard = () => (
-  <Wrapper>
-    <PlaneImg>
-      <img src={Plane} alt="" />
-    </PlaneImg>
-    <Info>
-      Moscow (SVO)
-      <ArrowImg src={Arrow} alt="" />
-      New York City (JFK)
-      <Date>
-        28 June, 2020
-        <DashImg src={Dash} alt="" />
-        14:50
-      </Date>
-      <Company>Aeroflot</Company>
-    </Info>
-    <Box>
-      <HeartImg src={Heart} alt="" />
-      <Price>
-        Price: <span>23 924 ₽</span>
-      </Price>
-    </Box>
-  </Wrapper>
-);
 
-export default FlightCard;
+const FlightCard = ({ Name, id }) => {
+  const dispatch = useDispatch();
+
+  // const handleClick = () => {
+  //   dispatch(addToFavourites(id));
+  //   console.log(id);
+  // };
+
+  return (
+    <Wrapper>
+      <PlaneImg>
+        <img src={Plane} alt="" />
+      </PlaneImg>
+      <Info>
+        {Name}
+        <ArrowImg src={Arrow} alt="" />
+        {Name}
+        <Date>
+          28 June, 2020
+          <DashImg src={Dash} alt="" />
+          14:50
+        </Date>
+        <Company>Aeroflot</Company>
+      </Info>
+      <Box>
+        <HeartImg onClick={handleClick} src={Heart} alt="" />
+        <Price>
+          Price: <span>23 924 ₽</span>
+        </Price>
+      </Box>
+    </Wrapper>
+  );
+};
+
+// const mapDispatchToProps = dispatch => ({
+//   return ()
+// })
+
+export default connect(null, null)(FlightCard);
