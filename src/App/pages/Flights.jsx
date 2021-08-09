@@ -61,6 +61,12 @@ const DateWrapper = styled.div`
     font-size: 25px;
     outline: none;
     cursor: pointer;
+
+    ::-webkit-calendar-picker-indicator {
+      filter: brightness(0) saturate(100%) invert(21%) sepia(97%) saturate(1557%) hue-rotate(198deg)
+        brightness(95%) contrast(90%);
+      cursor: pointer;
+    }
   }
 `;
 
@@ -132,7 +138,12 @@ const Flights = ({ flights, favourites }) => {
             SVO - JFK
           </Title>
           <DateWrapper>
-            <input type="date" value={date} onChange={e => handleChange(e)} />
+            <input
+              style={{ width: 190 }}
+              type="date"
+              value={date}
+              onChange={e => handleChange(e)}
+            />
           </DateWrapper>
         </Header>
         <Slider />
