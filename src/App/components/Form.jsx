@@ -76,6 +76,7 @@ const Form = () => {
 
   const formSubmit = data => {
     localStorage.setItem('userData', JSON.stringify(data));
+    localStorage.setItem('auth', true);
     router.push('/flights');
   };
 

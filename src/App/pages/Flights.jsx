@@ -141,9 +141,13 @@ const Flights = () => {
 
   const logOut = () => {
     localStorage.removeItem('userData');
+    localStorage.removeItem('auth');
     router.push('/');
   };
 
+  if (!localStorage.getItem('auth')) {
+    router.push('/');
+  }
   return (
     <Wrapper>
       <Base>
@@ -177,4 +181,5 @@ const Flights = () => {
     </Wrapper>
   );
 };
+
 export default Flights;
