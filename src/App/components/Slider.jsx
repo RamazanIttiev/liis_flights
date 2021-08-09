@@ -1,6 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import City from '../../assets/City.jpg';
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,14 +14,16 @@ const Slide = styled.img`
   margin-right: 12px;
 `;
 
-const Slider = () => (
+const Slider = ({ slides }) => (
   <Wrapper>
-    <Slide src={City} />
-    <Slide src={City} />
-    <Slide src={City} />
-    <Slide src={City} />
-    <Slide src={City} />
+    {slides.map(item => (
+      <Slide src={item.img} />
+    ))}
   </Wrapper>
 );
 
-export default Slider;
+const mapStateToProps = state => ({
+  slides: state.slides.slides,
+});
+
+export default connect(mapStateToProps, null)(Slider);
