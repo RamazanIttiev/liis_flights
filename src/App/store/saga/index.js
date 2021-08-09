@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects';
-import { favouritesWatcher } from './favSaga';
+import { favouritesWatcher } from './favourites';
 import { flightsWatcher } from './flights';
 
 function* rootWatcher() {
