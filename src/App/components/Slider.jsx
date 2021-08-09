@@ -17,7 +17,7 @@ const Slide = styled.img`
 const Slider = ({ slides }) => (
   <Wrapper>
     {slides.map(item => (
-      <Slide src={item.img} />
+      <Slide key={item.id} src={item.img} />
     ))}
   </Wrapper>
 );
