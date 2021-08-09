@@ -15,6 +15,7 @@ const LabelWrapper = styled.div`
   justify-content: space-between;
   margin-top: 25px;
   margin-bottom: 7px;
+  position: relative;
 `;
 
 const Label = styled.label`
@@ -22,6 +23,7 @@ const Label = styled.label`
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
+  color: ${props => props.error && '#EB1717'};
 `;
 
 const Input = styled.input`
@@ -29,12 +31,20 @@ const Input = styled.input`
   box-sizing: border-box;
   border-radius: 4px;
   height: 34px;
+  border: ${props => props.error && '1px solid #EB1717'};
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px rgba(235, 23, 23, 0.2);
+  border-radius: 4px;
 `;
 
 const ErrorMessage = styled.p`
-  color: red;
   font-family: Roboto;
-  font-weight: 400;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  color: #eb1717;
+  position: absolute;
+  bottom: -60px;
 `;
 
 const StyledButton = styled.button`
@@ -83,22 +93,24 @@ const Form = () => {
   return (
     <StyledForm onSubmit={handleSubmit(formSubmit)}>
       <LabelWrapper>
-        <Label>Логин:</Label>
+        <Label error={errors.email}>Логин:</Label>
         {errors.email && <ErrorMessage>Invalid email address</ErrorMessage>}
       </LabelWrapper>
       <Input
         type="text"
+        error={errors.email}
         {...register('email', {
           required: true,
           pattern: /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
         })}
       />
       <LabelWrapper>
-        <Label>Пароль:</Label>
+        <Label error={errors.password}>Пароль:</Label>
         {errors.password && <ErrorMessage>Invalid password</ErrorMessage>}
       </LabelWrapper>
       <Input
         type="password"
+        error={errors.password}
         {...register('password', { required: true, minLength: 8, pattern: /^[A-Za-z0-9_]+$/gm })}
       />
       <StyledButton type="submit">Войти</StyledButton>
