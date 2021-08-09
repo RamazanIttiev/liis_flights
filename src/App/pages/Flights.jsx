@@ -7,6 +7,7 @@ import Calendar from '../../assets/Calendar.svg';
 import Arrow from '../../assets/Arrow_small.svg';
 import useRouter from '../../hooks/useRouter';
 import Logout from '../components/Logout';
+import getFlights from '../../services';
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,9 +44,7 @@ const Title = styled.h1`
 const ArrowImg = styled.img`
   margin: 0 20px;
 `;
-const CalendarImg = styled.img`
-  margin-left: 15px;
-`;
+const CalendarImg = styled.img``;
 
 const DateWrapper = styled.div`
   display: flex;
@@ -55,6 +54,16 @@ const DateWrapper = styled.div`
   font-weight: 600;
   font-size: 25px;
   color: ${props => props.theme.palette.main};
+
+  input {
+    border: none;
+    color: #1157a7;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    outline: none;
+    cursor: pointer;
+  }
 `;
 
 const FlightsWrapper = styled.div`
@@ -93,24 +102,16 @@ const Favourite = styled.div`
 `;
 
 const Flights = ({ flights, favourites }) => {
-  const [date, setDate] = useState(new Date().toLocaleDateString());
+  const [date, setDate] = useState(new Date().toLocaleDateString('fr-CA'));
 
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(async () => {
     try {
-      const allFlights = await fetch(
-        `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/SFO-sky/LAX-sky/${date}`,
-        {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-key': '39e1463efbmsh1163ec1c6a2583ap158224jsn76ae20078a09',
-            'x-rapidapi-host': 'skyscanner-skyscanner-flight-search-v1.p.rapidapi.com',
-          },
-        },
-      );
+      const allFlights = await getFlights(date);
       const response = await allFlights.json();
+
       dispatch({ type: 'SET_FLIGHTS', payload: response.Places });
     } catch (e) {
       console.error(e);
@@ -120,7 +121,7 @@ const Flights = ({ flights, favourites }) => {
   const handleChange = event => {
     setDate(event.target.value);
   };
-
+  console.log(flights);
   if (!localStorage.getItem('auth')) {
     router.push('/');
   }
