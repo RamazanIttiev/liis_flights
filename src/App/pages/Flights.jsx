@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 import FlightCard from '../components/FlightCard';
 import Slider from '../components/Slider';
 import Calendar from '../../assets/Calendar.svg';
 import Arrow from '../../assets/Arrow_small.svg';
+import SignOut from '../../assets/LogOut.svg';
+import useRouter from '../../hooks/useRouter';
 
 const Wrapper = styled.div`
   display: flex;
@@ -90,9 +91,30 @@ const Favourite = styled.div`
   }
 `;
 
+const LogOut = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 26px;
+  right: 31px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${props => props.theme.palette.main};
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+`;
+
+const LogOutImg = styled.img`
+  margin-left: 20px;
+`;
+
 const Flights = () => {
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [flights, setFlights] = useState([]);
+
+  const router = useRouter();
 
   useEffect(async () => {
     try {
@@ -115,6 +137,11 @@ const Flights = () => {
 
   const handleChange = event => {
     setDate(event.target.value);
+  };
+
+  const logOut = () => {
+    localStorage.removeItem('userData');
+    router.push('/');
   };
 
   return (
@@ -144,6 +171,9 @@ const Flights = () => {
           </>
         )}
       </Base>
+      <LogOut onClick={logOut}>
+        Выйти <LogOutImg src={SignOut} />
+      </LogOut>
     </Wrapper>
   );
 };
