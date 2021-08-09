@@ -105,6 +105,13 @@ const Favourite = styled.div`
   }
 `;
 
+const NoFlights = styled.p`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  color: ${props => props.theme.palette.primary};
+`;
+
 const Flights = ({ flights, favourites }) => {
   const [date, setDate] = useState(new Date().toLocaleDateString('fr-CA'));
 
@@ -116,7 +123,7 @@ const Flights = ({ flights, favourites }) => {
       const allFlights = await getFlights(date);
       const response = await allFlights.json();
 
-      dispatch({ type: 'SET_FLIGHTS', payload: response.Places });
+      dispatch({ type: 'SET_FLIGHTS', payload: !response.errors ? response.Places : [] });
     } catch (e) {
       console.error(e);
     }
@@ -125,7 +132,7 @@ const Flights = ({ flights, favourites }) => {
   const handleChange = event => {
     setDate(event.target.value);
   };
-
+  console.log(flights);
   if (!localStorage.getItem('auth')) {
     router.push('/');
   }
@@ -154,14 +161,17 @@ const Flights = ({ flights, favourites }) => {
               рейсов
             </Favourite>
             <FlightsWrapper>
-              {flights &&
+              {flights.length ? (
                 flights.map(flight => (
                   <FlightCard
                     key={flight.Name}
-                    isFavourite={favourites.indexOf(flight.PlaceId) >= 0}
+                    isFavourite={flights.lenght > 0 && favourites.indexOf(flight.PlaceId) >= 0}
                     flight={flight}
                   />
-                ))}
+                ))
+              ) : (
+                <NoFlights>На выбранные даты нет рейсов</NoFlights>
+              )}
             </FlightsWrapper>
           </>
         )}

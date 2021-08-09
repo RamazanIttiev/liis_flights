@@ -5,12 +5,18 @@ const initialState = {
 const flights = (state = initialState, action) => {
   switch (action.type) {
     case 'FLIGHTS':
+      if (action.payload.length) {
+        return {
+          ...state,
+          flights: [
+            ...state.flights,
+            ...action.payload.filter(i => !state.flights.map(j => j.PlaceId).includes(i.PlaceId)),
+          ],
+        };
+      }
       return {
         ...state,
-        flights: [
-          ...state.flights,
-          ...action.payload.filter(i => !state.flights.map(j => j.PlaceId).includes(i.PlaceId)),
-        ],
+        flights: [],
       };
     default:
       return state;
