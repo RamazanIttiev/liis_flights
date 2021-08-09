@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import favourites from './reducers/favourites';
-import { favouritesWatcher } from './saga/favSaga';
+import rootWatcher from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,6 +14,6 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(sagaMiddleware)),
 );
 
-sagaMiddleware.run(favouritesWatcher);
+sagaMiddleware.run(rootWatcher);
 
 export default store;
