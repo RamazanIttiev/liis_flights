@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect, useDispatch } from 'react-redux';
 import FlightCard from '../components/FlightCard';
 import Slider from '../components/Slider';
-import Calendar from '../../assets/Calendar.svg';
 import Arrow from '../../assets/Arrow_small.svg';
 import useRouter from '../../hooks/useRouter';
 import Logout from '../components/Logout';
@@ -44,7 +43,6 @@ const Title = styled.h1`
 const ArrowImg = styled.img`
   margin: 0 20px;
 `;
-const CalendarImg = styled.img``;
 
 const DateWrapper = styled.div`
   display: flex;
@@ -121,7 +119,7 @@ const Flights = ({ flights, favourites }) => {
   const handleChange = event => {
     setDate(event.target.value);
   };
-  console.log(flights);
+
   if (!localStorage.getItem('auth')) {
     router.push('/');
   }
@@ -135,7 +133,6 @@ const Flights = ({ flights, favourites }) => {
           </Title>
           <DateWrapper>
             <input type="date" value={date} onChange={e => handleChange(e)} />
-            <CalendarImg src={Calendar} />
           </DateWrapper>
         </Header>
         <Slider />
