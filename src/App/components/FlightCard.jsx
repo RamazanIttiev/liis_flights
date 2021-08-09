@@ -109,9 +109,9 @@ const FlightCard = ({ flight, isFavourite }) => {
         <img src={Plane} alt="" />
       </PlaneImg>
       <Info>
-        {flight.Name}
+        {flight.Name} ({flight.IataCode})
         <ArrowImg src={Arrow} alt="" />
-        {flight.Name}
+        {flight.Name} ({flight.IataCode})
         <Date>
           28 June, 2020
           <DashImg src={Dash} alt="" />
