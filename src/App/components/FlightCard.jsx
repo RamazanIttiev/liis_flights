@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Plane from '../../assets/Plane.svg';
 import Arrow from '../../assets/Arrow.svg';
 import Heart from '../../assets/Heart.svg';
 import Dash from '../../assets/Dash.svg';
-import { setFavourites } from '../store/reducers/favourites';
-// import addToFavourites from '../store/actions/favourites';
 
 const Wrapper = styled.div`
   position: relative;
@@ -78,10 +76,13 @@ const HeartImg = styled.img`
   cursor: pointer;
   width: 21px;
   height: 18px;
-  filter: invert(99%) sepia(6%) saturate(300%) hue-rotate(222deg) brightness(117%) contrast(100%);
+  filter: ${props =>
+    props.colored
+      ? 'brightness(0) saturate(100%) invert(41%) sepia(55%) saturate(4400%) hue-rotate(309deg) brightness(100%) contrast(89%);'
+      : 'invert(98%) sepia(2%) saturate(91%) hue-rotate(40deg) brightness(118%) contrast(100%);'} 
 
   &:hover {
-    filter: invert(67%) sepia(71%) saturate(7220%) hue-rotate(309deg) brightness(99%) contrast(91%);
+    filter: brightness(0) saturate(100%) invert(41%) sepia(55%) saturate(4400%) hue-rotate(309deg) brightness(100%) contrast(89%);
   }
 `;
 
@@ -93,25 +94,24 @@ const Price = styled.div`
   }
 `;
 
-const FlightCard = ({ Name, id }) => {
+const FlightCard = ({ flight, isFavourite }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch({ type: 'SET_FAV', payload: id });
+    if (!isFavourite) {
+      dispatch({ type: 'ADD_TO_FAVOURITE', payload: flight.PlaceId });
+    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: flight.PlaceId });
   };
 
-  const state = useSelector(store => store);
-
-  console.log(state);
   return (
     <Wrapper>
       <PlaneImg>
         <img src={Plane} alt="" />
       </PlaneImg>
       <Info>
-        {Name}
+        {flight.Name}
         <ArrowImg src={Arrow} alt="" />
-        {Name}
+        {flight.Name}
         <Date>
           28 June, 2020
           <DashImg src={Dash} alt="" />
@@ -120,7 +120,7 @@ const FlightCard = ({ Name, id }) => {
         <Company>Aeroflot</Company>
       </Info>
       <Box>
-        <HeartImg onClick={handleClick} src={Heart} alt="" />
+        <HeartImg onClick={handleClick} src={Heart} colored={isFavourite} alt="" />
         <Price>
           Price: <span>23 924 ₽</span>
         </Price>
@@ -128,9 +128,5 @@ const FlightCard = ({ Name, id }) => {
     </Wrapper>
   );
 };
-
-// const mapDispatchToProps = dispatch => ({
-//   return ()
-// })
 
 export default connect(null, null)(FlightCard);

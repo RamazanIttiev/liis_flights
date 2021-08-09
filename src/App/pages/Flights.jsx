@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { connect, useDispatch } from 'react-redux';
 import FlightCard from '../components/FlightCard';
 import Slider from '../components/Slider';
 import Calendar from '../../assets/Calendar.svg';
@@ -91,11 +92,11 @@ const Favourite = styled.div`
   }
 `;
 
-const Flights = () => {
+const Flights = ({ flights, favourites }) => {
   const [date, setDate] = useState(new Date().toLocaleDateString());
-  const [flights, setFlights] = useState([]);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(async () => {
     try {
@@ -110,7 +111,7 @@ const Flights = () => {
         },
       );
       const response = await allFlights.json();
-      setFlights(response);
+      dispatch({ type: 'SET_FLIGHTS', payload: response.Places });
     } catch (e) {
       console.error(e);
     }
@@ -140,12 +141,18 @@ const Flights = () => {
         {flights.code !== 404 && (
           <>
             <Favourite>
-              Добавлено в Избранное: <span>10 </span>
+              Добавлено в Избранное: <span>{favourites.length} </span>
               рейсов
             </Favourite>
             <FlightsWrapper>
-              {flights.Places &&
-                flights.Places.map((flight, id) => <FlightCard {...flight} id={id} />)}
+              {flights &&
+                flights.map(flight => (
+                  <FlightCard
+                    key={flight.Name}
+                    isFavourite={favourites.indexOf(flight.PlaceId) >= 0}
+                    flight={flight}
+                  />
+                ))}
             </FlightsWrapper>
           </>
         )}
@@ -155,4 +162,9 @@ const Flights = () => {
   );
 };
 
-export default Flights;
+const mapStateToProps = state => ({
+  flights: state.flights.flights,
+  favourites: state.favourites.favourites,
+});
+
+export default connect(mapStateToProps, null)(Flights);

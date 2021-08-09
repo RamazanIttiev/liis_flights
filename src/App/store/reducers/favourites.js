@@ -4,13 +4,15 @@ const initialState = {
 
 const favourites = (state = initialState, action) => {
   switch (action.type) {
-    case 'IS_FAVOURITE':
+    case 'ADD_FAVOURITE':
       return {
         ...state,
-        favourites: [
-          ...state.favourites,
-          state.favourites.filter(item => item.payload !== action.payload),
-        ],
+        favourites: [...state.favourites, action.payload],
+      };
+    case 'REMOVE_FAVOURITE':
+      return {
+        ...state,
+        favourites: state.favourites.filter(PlaceId => PlaceId !== action.payload),
       };
     default:
       return state;
