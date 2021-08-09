@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Plane from '../../assets/Plane.svg';
 import Arrow from '../../assets/Arrow.svg';
 import Heart from '../../assets/Heart.svg';
 import Dash from '../../assets/Dash.svg';
+import { setFavourites } from '../store/reducers/favourites';
 // import addToFavourites from '../store/actions/favourites';
 
 const Wrapper = styled.div`
@@ -95,11 +96,13 @@ const Price = styled.div`
 const FlightCard = ({ Name, id }) => {
   const dispatch = useDispatch();
 
-  // const handleClick = () => {
-  //   dispatch(addToFavourites(id));
-  //   console.log(id);
-  // };
+  const handleClick = () => {
+    dispatch({ type: 'SET_FAV', payload: id });
+  };
 
+  const state = useSelector(store => store);
+
+  console.log(state);
   return (
     <Wrapper>
       <PlaneImg>

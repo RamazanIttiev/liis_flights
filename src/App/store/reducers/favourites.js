@@ -7,7 +7,10 @@ const favourites = (state = initialState, action) => {
     case 'IS_FAVOURITE':
       return {
         ...state,
-        isFavourite: [...state.favourites, action.payload],
+        favourites: [
+          ...state.favourites,
+          state.favourites.filter(item => item.payload !== action.payload),
+        ],
       };
     default:
       return state;
