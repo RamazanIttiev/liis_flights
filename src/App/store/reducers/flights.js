@@ -7,11 +7,10 @@ const flights = (state = initialState, action) => {
     case 'FLIGHTS':
       return {
         ...state,
-        flights: [...state.flights, ...action.payload],
-        // flights: state.flights.map(item =>
-        //   // state.flights.includes(item) ? null : state.flights.push(item),
-        //   action.payload.filter(flight => flight.PlaceId === item.PlaceId),
-        // ),
+        flights: [
+          ...state.flights,
+          ...action.payload.filter(i => !state.flights.map(j => j.PlaceId).includes(i.PlaceId)),
+        ],
       };
     default:
       return state;
