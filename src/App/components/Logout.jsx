@@ -12,7 +12,6 @@ const LogOut = styled.div`
   justify-content: center;
   align-items: center;
   color: ${props => props.theme.palette.main};
-  font-family: Source Sans Pro;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
