@@ -7,9 +7,14 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(${MainBgr}) no-repeat center;
-  backdrop-filter: blur(20px);
   height: 100vh;
+`;
+
+const Background = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: blur(10px);
 `;
 
 const LoginBox = styled.div`
@@ -19,6 +24,7 @@ const LoginBox = styled.div`
   border-radius: 20px;
   padding: 50px 30px 30px;
   box-sizing: border-box;
+  z-index: 1;
 `;
 
 const Title = styled.h1`
@@ -32,6 +38,7 @@ const Title = styled.h1`
 
 const Login = () => (
   <Wrapper>
+    <Background src={MainBgr} alt="" />
     <LoginBox>
       <Title>Simple Flight Check</Title>
       <Form />
