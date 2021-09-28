@@ -55,7 +55,7 @@ const DateWrapper = styled.div`
 
   input {
     border: none;
-    color: #1157a7;
+    color: ${props => props.theme.palette.main};
     font-style: normal;
     font-weight: 600;
     font-size: 25px;

@@ -78,11 +78,11 @@ const HeartImg = styled.img`
   height: 18px;
   filter: ${props =>
     props.colored
-      ? 'brightness(0) saturate(100%) invert(41%) sepia(55%) saturate(4400%) hue-rotate(309deg) brightness(100%) contrast(89%);'
-      : 'invert(98%) sepia(2%) saturate(91%) hue-rotate(40deg) brightness(118%) contrast(100%);'} 
+      ? 'invert(100%) sepia(0%) saturate(0%) hue-rotate(67deg) brightness(113%) contrast(101%);'
+      : 'invert(48%) sepia(23%) saturate(1566%) hue-rotate(313deg) brightness(94%) contrast(90%);'} 
 
   &:hover {
-    filter: brightness(0) saturate(100%) invert(41%) sepia(55%) saturate(4400%) hue-rotate(309deg) brightness(100%) contrast(89%);
+    filter: invert(48%) sepia(23%) saturate(1566%) hue-rotate(313deg) brightness(94%) contrast(90%);
   }
 `;
 

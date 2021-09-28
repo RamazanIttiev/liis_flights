@@ -62,7 +62,7 @@ const StyledButton = styled.button`
   font-weight: normal;
   font-size: 16px;
   color: #fff;
-  background: linear-gradient(104.34deg, #3c4cad -15.34%, #00c3ff 145.95%);
+  background: linear-gradient(104.34deg, #41522e -15.34%, #be8022 145.95%);
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
 
