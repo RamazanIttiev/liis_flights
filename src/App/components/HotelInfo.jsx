@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect, useDispatch } from 'react-redux';
-import Plane from '../../assets/Plane.svg';
+import House from '../../assets/House.svg';
 import Arrow from '../../assets/Arrow.svg';
 import Heart from '../../assets/Heart.svg';
 import Dash from '../../assets/Dash.svg';
@@ -106,7 +106,7 @@ const HotelInfo = ({ flight, isFavourite }) => {
   return (
     <Wrapper>
       <PlaneImg>
-        <img src={Plane} alt="" />
+        <img src={House} alt="" />
       </PlaneImg>
       <Info>
         {flight.Name} ({flight.IataCode})

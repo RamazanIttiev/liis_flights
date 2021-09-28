@@ -1,15 +1,15 @@
-import City from '../../../assets/City.jpg';
-import City2 from '../../../assets/City2.jpg';
-import City3 from '../../../assets/City3.jpg';
+import Hotel from '../../../assets/Hotel.jpg';
+import Hotel2 from '../../../assets/Hotel2.jpg';
+import Hotel3 from '../../../assets/Hotel3.jpg';
 
 const initialState = {
   photos: [
-    { id: 1, img: City },
-    { id: 2, img: City2 },
-    { id: 3, img: City3 },
-    { id: 4, img: City },
-    { id: 5, img: City2 },
-    { id: 6, img: City3 },
+    { id: 1, img: Hotel },
+    { id: 2, img: Hotel2 },
+    { id: 3, img: Hotel3 },
+    { id: 4, img: Hotel },
+    { id: 5, img: Hotel2 },
+    { id: 6, img: Hotel3 },
   ],
 };
 
