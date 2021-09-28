@@ -94,7 +94,7 @@ const Price = styled.div`
   }
 `;
 
-const FlightCard = ({ flight, isFavourite }) => {
+const HotelInfo = ({ flight, isFavourite }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -129,4 +129,4 @@ const FlightCard = ({ flight, isFavourite }) => {
   );
 };
 
-export default connect(null, null)(FlightCard);
+export default connect(null, null)(HotelInfo);

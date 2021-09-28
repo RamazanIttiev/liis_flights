@@ -1,4 +1,4 @@
-const getFlights = date => {
+const getHotels = date => {
   const data = fetch(
     `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsedates/v1.0/US/USD/en-US/SFO-sky/LAX-sky/${date}`,
     {
@@ -12,4 +12,4 @@ const getFlights = date => {
   return data;
 };
 
-export default getFlights;
+export default getHotels;

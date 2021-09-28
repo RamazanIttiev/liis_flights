@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MainBgr from '../../assets/MainBgr.jpg';
-import Form from '../components/Form';
+import LoginForm from '../components/LoginForm';
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,8 +40,8 @@ const Login = () => (
   <Wrapper>
     <Background src={MainBgr} alt="" />
     <LoginBox>
-      <Title>Simple Flight Check</Title>
-      <Form />
+      <Title>Simple Hotel Check</Title>
+      <LoginForm />
     </LoginBox>
   </Wrapper>
 );

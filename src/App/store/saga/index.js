@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects';
 import { favouritesWatcher } from './favourites';
-import { flightsWatcher } from './flights';
+import { hotelsWatcher } from './hotels';
 
 function* rootWatcher() {
-  yield all([favouritesWatcher(), flightsWatcher()]);
+  yield all([favouritesWatcher(), hotelsWatcher()]);
 }
 
 export default rootWatcher;

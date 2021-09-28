@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect, useDispatch } from 'react-redux';
-import FlightCard from '../components/FlightCard';
-import Slider from '../components/Slider';
+import HotelInfo from '../components/HotelInfo';
+import Slider from '../components/Photos';
 import Arrow from '../../assets/Arrow_small.svg';
 import useRouter from '../../hooks/useRouter';
 import Logout from '../components/Logout';
-import getFlights from '../../services';
+import getHotels from '../../services';
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ const DateWrapper = styled.div`
   }
 `;
 
-const FlightsWrapper = styled.div`
+const HotelsWrapper = styled.div`
   min-height: 100px;
   margin-top: 22px;
   max-height: 450px;
@@ -105,14 +105,14 @@ const Favourite = styled.div`
   }
 `;
 
-const NoFlights = styled.p`
+const NoHotels = styled.p`
   font-style: normal;
   font-weight: normal;
   font-size: 17px;
   color: ${props => props.theme.palette.primary};
 `;
 
-const Flights = ({ flights, favourites }) => {
+const Hotels = ({ hotels, favourites }) => {
   const [date, setDate] = useState(new Date().toLocaleDateString('fr-CA'));
 
   const router = useRouter();
@@ -120,10 +120,10 @@ const Flights = ({ flights, favourites }) => {
 
   useEffect(async () => {
     try {
-      const allFlights = await getFlights(date);
-      const response = await allFlights.json();
+      const allHotels = await getHotels(date);
+      const response = await allHotels.json();
 
-      dispatch({ type: 'SET_FLIGHTS', payload: !response.errors ? response.Places : [] });
+      dispatch({ type: 'SET_HOTELS', payload: !response.errors ? response.Places : [] });
     } catch (e) {
       console.error(e);
     }
@@ -132,7 +132,7 @@ const Flights = ({ flights, favourites }) => {
   const handleChange = event => {
     setDate(event.target.value);
   };
-  console.log(flights);
+  console.log(hotels);
   if (!localStorage.getItem('auth')) {
     router.push('/');
   }
@@ -154,25 +154,25 @@ const Flights = ({ flights, favourites }) => {
           </DateWrapper>
         </Header>
         <Slider />
-        {flights.code !== 404 && (
+        {hotels.code !== 404 && (
           <>
             <Favourite>
               Добавлено в Избранное: <span>{favourites.length} </span>
               рейсов
             </Favourite>
-            <FlightsWrapper>
-              {flights.length ? (
-                flights.map(flight => (
-                  <FlightCard
+            <HotelsWrapper>
+              {hotels.length ? (
+                hotels.map(flight => (
+                  <HotelInfo
                     key={flight.Name}
-                    isFavourite={flights.lenght > 0 && favourites.indexOf(flight.PlaceId) >= 0}
+                    isFavourite={hotels.lenght > 0 && favourites.indexOf(flight.PlaceId) >= 0}
                     flight={flight}
                   />
                 ))
               ) : (
-                <NoFlights>На выбранные даты нет рейсов</NoFlights>
+                <NoHotels>На выбранные даты нет рейсов</NoHotels>
               )}
-            </FlightsWrapper>
+            </HotelsWrapper>
           </>
         )}
       </Base>
@@ -182,8 +182,8 @@ const Flights = ({ flights, favourites }) => {
 };
 
 const mapStateToProps = state => ({
-  flights: state.flights.flights,
+  hotels: state.hotels.hotels,
   favourites: state.favourites.favourites,
 });
 
-export default connect(mapStateToProps, null)(Flights);
+export default connect(mapStateToProps, null)(Hotels);
