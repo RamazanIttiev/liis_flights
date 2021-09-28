@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import App from './App/App';
-import './index.scss';
+import './styles/index.scss';
 import reportWebVitals from './reportWebVitals';
 import theme from './theme';
 import store from './App/store';
