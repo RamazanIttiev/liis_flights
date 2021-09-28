@@ -5,12 +5,6 @@ import useRouter from '../../hooks/useRouter';
 
 const LogOut = styled.div`
   cursor: pointer;
-  position: absolute;
-  top: 26px;
-  right: 31px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: ${props => props.theme.palette.main};
   font-style: normal;
   font-weight: normal;

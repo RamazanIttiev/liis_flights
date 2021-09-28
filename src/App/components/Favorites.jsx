@@ -6,12 +6,11 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 360px;
-  height: 410px;
+  height: 472px;
   background: #ffffff;
   box-shadow: 0px 4px 33px rgb(0 0 0 / 4%);
   border-radius: 16px;
   padding: 32px;
-  margin-bottom: 24px;
 `;
 
 const Label = styled.label`
@@ -64,7 +63,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Filter = () => (
+const Favorites = () => (
   <StyledForm>
     <Label>Локация</Label>
     <Input type="text" />
@@ -76,4 +75,4 @@ const Filter = () => (
   </StyledForm>
 );
 
-export default Filter;
+export default Favorites;
