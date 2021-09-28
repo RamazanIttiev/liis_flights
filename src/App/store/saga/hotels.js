@@ -1,9 +1,7 @@
 import { put, takeEvery } from 'redux-saga/effects';
 
-function* hotelsWorker(data) {
-  if (data.payload !== undefined || data.payload.length !== 0) {
-    yield put({ type: 'HOTELS', payload: data.payload });
-  } else yield put({ type: 'HOTELS', payload: [] });
+function* hotelsWorker({ payload }) {
+  yield put({ type: 'HOTELS', payload: payload });
 }
 
 export function* hotelsWatcher() {
