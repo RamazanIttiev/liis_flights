@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import useRouter from '../../hooks/useRouter';
-// import getHotels from '../../services';
 import Filter from '../components/Filter';
 import Hotels from '../components/Hotels';
 import Favorites from '../components/Favorites';
@@ -27,18 +26,6 @@ const Aside = styled.div`
 
 const Index = ({ hotels, favourites }) => {
   const router = useRouter();
-  // const dispatch = useDispatch();
-
-  // useEffect(async () => {
-  //   try {
-  //     const allHotels = await getHotels(date);
-  //     const response = await allHotels.json();
-
-  //     dispatch({ type: 'SET_HOTELS', payload: !response.errors ? response.Places : [] });
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }, [date]);
 
   if (!localStorage.getItem('auth')) {
     router.push('/');
@@ -51,15 +38,10 @@ const Index = ({ hotels, favourites }) => {
           <Filter />
           <Favorites />
         </Aside>
-        <Hotels hotels={hotels} favourites={favourites} />
+        <Hotels />
       </Container>
     </Wrapper>
   );
 };
 
-const mapStateToProps = state => ({
-  hotels: state.hotels.hotels,
-  favourites: state.favourites.favourites,
-});
-
-export default connect(mapStateToProps, null)(Index);
+export default Index;

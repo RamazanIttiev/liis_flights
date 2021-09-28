@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import House from '../../assets/House.svg';
-import Arrow from '../../assets/Arrow.svg';
 import Heart from '../../assets/Heart.svg';
 import Dash from '../../assets/Dash.svg';
 
@@ -55,7 +54,6 @@ const Info = styled.div`
   }
 `;
 
-const ArrowImg = styled.img``;
 const DashImg = styled.img``;
 
 const Date = styled.div`
@@ -65,9 +63,12 @@ const Date = styled.div`
   color: ${props => props.theme.palette.grey};
 `;
 
-const Company = styled.div`
-  color: ${props => props.theme.palette.grey};
-  font-size: 14px;
+const HotelName = styled.div`
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 17px;
+  color: ${props => props.theme.palette.primary};
 `;
 
 const Box = styled.div`
@@ -83,8 +84,8 @@ const HeartImg = styled.img`
   height: 18px;
   filter: ${props =>
     props.colored
-      ? 'invert(100%) sepia(0%) saturate(0%) hue-rotate(67deg) brightness(113%) contrast(101%);'
-      : 'invert(48%) sepia(23%) saturate(1566%) hue-rotate(313deg) brightness(94%) contrast(90%);'} 
+      ? 'invert(48%) sepia(23%) saturate(1566%) hue-rotate(313deg) brightness(94%) contrast(90%);'
+      : 'invert(100%) sepia(0%) saturate(0%) hue-rotate(67deg) brightness(113%) contrast(101%);'}
 
   &:hover {
     filter: invert(48%) sepia(23%) saturate(1566%) hue-rotate(313deg) brightness(94%) contrast(90%);
@@ -99,13 +100,13 @@ const Price = styled.div`
   }
 `;
 
-const HotelInfo = ({ flight, isFavourite }) => {
+const HotelInfo = ({ isFavourite, hotelName, hotelId }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
     if (!isFavourite) {
-      dispatch({ type: 'ADD_TO_FAVOURITE', payload: flight.PlaceId });
-    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: flight.PlaceId });
+      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotelId });
+    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotelId });
   };
 
   return (
@@ -114,15 +115,11 @@ const HotelInfo = ({ flight, isFavourite }) => {
         <img src={House} alt="" />
       </PlaneImg>
       <Info>
-        {flight.Name} ({flight.IataCode})
-        <ArrowImg src={Arrow} alt="" />
-        {flight.Name} ({flight.IataCode})
+        <HotelName>{hotelName}</HotelName>
         <Date>
           28 June, 2020
-          <DashImg src={Dash} alt="" />
-          14:50
+          <DashImg src={Dash} alt="" />1 день
         </Date>
-        <Company>Aeroflot</Company>
       </Info>
       <Box>
         <HeartImg onClick={handleClick} src={Heart} colored={isFavourite} alt="" />
@@ -134,4 +131,4 @@ const HotelInfo = ({ flight, isFavourite }) => {
   );
 };
 
-export default connect(null, null)(HotelInfo);
+export default HotelInfo;
