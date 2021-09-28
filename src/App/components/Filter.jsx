@@ -1,4 +1,5 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
@@ -64,16 +65,27 @@ const StyledButton = styled.button`
   }
 `;
 
-const Filter = () => (
-  <StyledForm>
-    <Label>Локация</Label>
-    <Input type="text" />
-    <Label>Дата заселения</Label>
-    <Input type="date" />
-    <Label>Количество дней</Label>
-    <Input type="number" />
-    <StyledButton type="submit">Найти</StyledButton>
-  </StyledForm>
-);
+const Filter = () => {
+  const { handleSubmit, register } = useForm();
+
+  const formSubmit = data => {
+    console.log(data);
+  };
+  return (
+    <StyledForm onSubmit={handleSubmit(formSubmit)}>
+      <Label>Локация</Label>
+      <Input {...register('location')} defaultValue="Moscow" type="text" />
+      <Label>Дата заселения</Label>
+      <Input
+        {...register('chechIn')}
+        defaultValue={new Date().toLocaleDateString('fr-CA')}
+        type="date"
+      />
+      <Label>Количество дней</Label>
+      <Input {...register('checkout')} defaultValue="1" type="number" />
+      <StyledButton type="submit">Найти</StyledButton>
+    </StyledForm>
+  );
+};
 
 export default Filter;
