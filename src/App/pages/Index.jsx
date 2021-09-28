@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 import useRouter from '../../hooks/useRouter';
 import Filter from '../components/Filter';
 import Hotels from '../components/Hotels';
@@ -24,7 +23,7 @@ const Aside = styled.div`
   margin-right: 24px;
 `;
 
-const Index = ({ hotels, favourites }) => {
+const Index = () => {
   const router = useRouter();
 
   if (!localStorage.getItem('auth')) {

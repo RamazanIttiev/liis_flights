@@ -119,7 +119,7 @@ const Hotels = ({ hotels, favourites }) => {
             <HotelInfo
               key={hotel.hotelId}
               isFavourite={hotels.length > 0 && favourites.indexOf(hotel.hotelId) >= 0}
-              {...hotel}
+              hotel={hotel}
             />
           ))}
         </HotelsWrapper>

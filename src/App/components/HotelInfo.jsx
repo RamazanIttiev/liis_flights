@@ -100,13 +100,14 @@ const Price = styled.div`
   }
 `;
 
-const HotelInfo = ({ isFavourite, hotelName, hotelId }) => {
+const HotelInfo = ({ isFavourite, hotel }) => {
+  const { hotelName } = hotel;
   const dispatch = useDispatch();
 
   const handleClick = () => {
     if (!isFavourite) {
-      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotelId });
-    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotelId });
+      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotel.hotelId });
+    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotel.hotelId });
   };
 
   return (

@@ -12,7 +12,7 @@ const favourites = (state = initialState, action) => {
     case 'REMOVE_FAVOURITE':
       return {
         ...state,
-        favourites: state.favourites.filter(PlaceId => PlaceId !== action.payload),
+        favourites: state.favourites.filter(hotel => hotel !== action.payload),
       };
     default:
       return state;
