@@ -85,12 +85,13 @@ const Favourite = styled.div`
 //   color: ${props => props.theme.palette.primary};
 // `;
 
-const Hotels = ({ hotels, favourites }) => {
+const Hotels = ({ hotels, favourites, filters }) => {
   const dispatch = useDispatch();
   const [initialFilters, setInitialFilters] = useState({
-    city: 'Moscow',
+    location: 'Moscow',
     checkIn: new Date().toLocaleDateString('fr-CA'),
     checkOut: '2021-10-03',
+    days: 1,
   });
 
   useEffect(async () => {
@@ -104,14 +105,24 @@ const Hotels = ({ hotels, favourites }) => {
     }
   }, []);
 
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  };
+
+  const checkInDate = new Date(filters.checkIn || initialFilters.checkIn).toLocaleDateString(
+    'fr-CA',
+    options,
+  );
   return (
     <Base>
       <SearchInfo>
         <Title>
           Отели <ArrowImg src={Arrow} />
-          Москва
+          {filters.location || initialFilters.location}
         </Title>
-        <CheckIn>07 июля 2020</CheckIn>
+        <CheckIn>{checkInDate}</CheckIn>
       </SearchInfo>
       <Photos />
       <>
@@ -125,6 +136,8 @@ const Hotels = ({ hotels, favourites }) => {
               key={hotel.hotelId}
               isFavourite={hotels.length > 0 && favourites.indexOf(hotel.hotelId) >= 0}
               hotel={hotel}
+              checkInDate={checkInDate}
+              days={filters.days || initialFilters.days}
             />
           ))}
         </HotelsWrapper>
@@ -136,6 +149,7 @@ const Hotels = ({ hotels, favourites }) => {
 const mapStateToProps = state => ({
   hotels: state.hotels.hotels,
   favourites: state.favourites.favourites,
+  filters: state.filters.filters,
 });
 
 export default connect(mapStateToProps, null)(Hotels);

@@ -100,14 +100,15 @@ const Price = styled.div`
   }
 `;
 
-const HotelInfo = ({ isFavourite, hotel }) => {
-  const { hotelName } = hotel;
+const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
+  const { hotelName, priceFrom } = hotel;
+
   const dispatch = useDispatch();
 
   const handleClick = () => {
     if (!isFavourite) {
-      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotel.hotelId });
-    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotel.hotelId });
+      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotel });
+    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotel });
   };
 
   return (
@@ -118,14 +119,15 @@ const HotelInfo = ({ isFavourite, hotel }) => {
       <Info>
         <HotelName>{hotelName}</HotelName>
         <Date>
-          28 June, 2020
-          <DashImg src={Dash} alt="" />1 день
+          {checkInDate}
+          <DashImg src={Dash} alt="" />
+          {days}
         </Date>
       </Info>
       <Box>
         <HeartImg onClick={handleClick} src={Heart} colored={isFavourite} alt="" />
         <Price>
-          Price: <span>23 924 ₽</span>
+          Price: <span>{priceFrom}</span>
         </Price>
       </Box>
     </Wrapper>

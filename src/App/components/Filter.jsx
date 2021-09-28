@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import getHotels from '../../services';
 
 const StyledForm = styled.form`
   display: flex;
@@ -66,23 +68,46 @@ const StyledButton = styled.button`
 `;
 
 const Filter = () => {
+  const dispatch = useDispatch();
+
   const { handleSubmit, register } = useForm();
 
-  const formSubmit = data => {
-    console.log(data);
+  const formSubmit = async data => {
+    dispatch({ type: 'SET_HOTELS', payload: [] });
+
+    const myDate = new Date(data.checkIn);
+    myDate.setDate(myDate.getDate() + +data.checkOut);
+
+    const filters = {
+      location: data.location,
+      checkIn: data.checkIn,
+      checkOut: myDate.toLocaleDateString('fr-CA'),
+      days: +data.checkOut,
+    };
+
+    try {
+      const allHotels = await getHotels(filters);
+      const response = await allHotels.json();
+
+      dispatch({ type: 'SET_HOTELS', payload: response });
+      dispatch({ type: 'SET_FILTERS', payload: filters });
+    } catch (e) {
+      console.error(e);
+    }
   };
+
   return (
     <StyledForm onSubmit={handleSubmit(formSubmit)}>
       <Label>Локация</Label>
       <Input {...register('location')} defaultValue="Moscow" type="text" />
       <Label>Дата заселения</Label>
       <Input
-        {...register('chechIn')}
+        {...register('checkIn')}
         defaultValue={new Date().toLocaleDateString('fr-CA')}
         type="date"
       />
       <Label>Количество дней</Label>
-      <Input {...register('checkout')} defaultValue="1" type="number" />
+      <Input {...register('checkOut')} defaultValue="1" type="number" />
       <StyledButton type="submit">Найти</StyledButton>
     </StyledForm>
   );

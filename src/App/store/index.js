@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import favourites from './reducers/favourites';
 import photos from './reducers/photos';
 import hotels from './reducers/hotels';
+import filters from './reducers/filters';
 import rootWatcher from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers({
   favourites,
   photos,
   hotels,
+  filters,
 });
 
 const store = createStore(
