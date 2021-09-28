@@ -10,7 +10,7 @@ const Base = styled.div`
   order: 2;
   width: 664px;
   background: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
   padding: 50px 30px 30px;
   box-sizing: border-box;
@@ -46,7 +46,7 @@ const CheckIn = styled.div`
 const HotelsWrapper = styled.div`
   min-height: 100px;
   margin-top: 22px;
-  max-height: 450px;
+  max-height: 520px;
   overflow: auto;
   padding-right: 10px;
 

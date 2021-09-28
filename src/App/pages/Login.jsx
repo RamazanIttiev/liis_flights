@@ -14,7 +14,8 @@ const Background = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
-  filter: blur(10px);
+  filter: blur(5px);
+  opacity: 0.7;
 `;
 
 const LoginBox = styled.div`
