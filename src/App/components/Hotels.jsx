@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import Photos from './Photos';
 import HotelInfo from './HotelInfo';
@@ -33,7 +33,7 @@ const ArrowImg = styled.img`
   margin: 0 20px;
 `;
 
-const Date = styled.div`
+const CheckIn = styled.div`
   display: flex;
   align-items: center;
   font-family: Source Sans Pro;
@@ -87,10 +87,15 @@ const Favourite = styled.div`
 
 const Hotels = ({ hotels, favourites }) => {
   const dispatch = useDispatch();
+  const [initialFilters, setInitialFilters] = useState({
+    city: 'Moscow',
+    checkIn: new Date().toLocaleDateString('fr-CA'),
+    checkOut: '2021-10-03',
+  });
 
   useEffect(async () => {
     try {
-      const allHotels = await getHotels();
+      const allHotels = await getHotels(initialFilters);
       const response = await allHotels.json();
 
       dispatch({ type: 'SET_HOTELS', payload: response });
@@ -106,7 +111,7 @@ const Hotels = ({ hotels, favourites }) => {
           Отели <ArrowImg src={Arrow} />
           Москва
         </Title>
-        <Date>07 июля 2020</Date>
+        <CheckIn>07 июля 2020</CheckIn>
       </SearchInfo>
       <Photos />
       <>
