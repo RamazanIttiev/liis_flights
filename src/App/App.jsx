@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
-import Hotels from './pages/Hotels';
+import Index from './pages/Index';
 import Login from './pages/Login';
 
 const App = () => (
@@ -9,7 +9,7 @@ const App = () => (
         <Login />
       </Route>
       <Route exact path="/hotels">
-        <Hotels />
+        <Index />
       </Route>
     </Switch>
   </>

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect, useDispatch } from 'react-redux';
 import HotelInfo from '../components/HotelInfo';
-import Slider from '../components/Photos';
-import Arrow from '../../assets/Arrow_small.svg';
+import Photos from '../components/Photos';
 import useRouter from '../../hooks/useRouter';
 import Logout from '../components/Logout';
 import getHotels from '../../services';
+import Header from '../components/Header';
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,49 +25,6 @@ const Base = styled.div`
   border-radius: 20px;
   padding: 50px 30px 30px;
   box-sizing: border-box;
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Title = styled.h1`
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 32px;
-`;
-
-const ArrowImg = styled.img`
-  margin: 0 20px;
-`;
-
-const DateWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  font-family: Source Sans Pro;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 25px;
-  color: ${props => props.theme.palette.main};
-
-  input {
-    border: none;
-    color: ${props => props.theme.palette.main};
-    font-style: normal;
-    font-weight: 600;
-    font-size: 25px;
-    outline: none;
-    cursor: pointer;
-
-    ::-webkit-calendar-picker-indicator {
-      filter: brightness(0) saturate(100%) invert(21%) sepia(97%) saturate(1557%) hue-rotate(198deg)
-        brightness(95%) contrast(90%);
-      cursor: pointer;
-    }
-  }
 `;
 
 const HotelsWrapper = styled.div`
@@ -113,47 +70,28 @@ const NoHotels = styled.p`
 `;
 
 const Hotels = ({ hotels, favourites }) => {
-  const [date, setDate] = useState(new Date().toLocaleDateString('fr-CA'));
-
   const router = useRouter();
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    try {
-      const allHotels = await getHotels(date);
-      const response = await allHotels.json();
+  // useEffect(async () => {
+  //   try {
+  //     const allHotels = await getHotels(date);
+  //     const response = await allHotels.json();
 
-      dispatch({ type: 'SET_HOTELS', payload: !response.errors ? response.Places : [] });
-    } catch (e) {
-      console.error(e);
-    }
-  }, [date]);
+  //     dispatch({ type: 'SET_HOTELS', payload: !response.errors ? response.Places : [] });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }, [date]);
 
-  const handleChange = event => {
-    setDate(event.target.value);
-  };
-  console.log(hotels);
   if (!localStorage.getItem('auth')) {
     router.push('/');
   }
   return (
     <Wrapper>
       <Base>
-        <Header>
-          <Title>
-            Вылеты <ArrowImg src={Arrow} />
-            SVO - JFK
-          </Title>
-          <DateWrapper>
-            <input
-              style={{ width: 190 }}
-              type="date"
-              value={date}
-              onChange={e => handleChange(e)}
-            />
-          </DateWrapper>
-        </Header>
-        <Slider />
+        <Header />
+        <Photos />
         {hotels.code !== 404 && (
           <>
             <Favourite>
@@ -165,7 +103,7 @@ const Hotels = ({ hotels, favourites }) => {
                 hotels.map(flight => (
                   <HotelInfo
                     key={flight.Name}
-                    isFavourite={hotels.lenght > 0 && favourites.indexOf(flight.PlaceId) >= 0}
+                    isFavourite={hotels.length > 0 && favourites.indexOf(flight.PlaceId) >= 0}
                     flight={flight}
                   />
                 ))

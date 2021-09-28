@@ -75,7 +75,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Form = () => {
+const LoginForm = () => {
   const {
     register,
     formState: { errors },
@@ -118,4 +118,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default LoginForm;
