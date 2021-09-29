@@ -9,7 +9,7 @@ import ArrowDown from '../../assets/arrowDown.svg';
 
 import { checkInDate } from '../../utils';
 
-const StyledForm = styled.form`
+const Base = styled.form`
   display: flex;
   flex-direction: column;
   width: 360px;
@@ -49,8 +49,8 @@ const Arrows = styled.div`
   flex-direction: column;
 `;
 
-const HotelsWrapper = styled.div`
-  min-height: 100px;
+const FavouritesWrapper = styled.div`
+  min-height: 289px;
   margin-top: 40px;
   max-height: 520px;
   overflow: auto;
@@ -75,7 +75,7 @@ const HotelsWrapper = styled.div`
 `;
 
 const Favorites = ({ hotels, filters }) => (
-  <StyledForm>
+  <Base>
     <Title>Избранное</Title>
     <SortWrapper>
       <SortBtn>
@@ -93,7 +93,7 @@ const Favorites = ({ hotels, filters }) => (
         </Arrows>
       </SortBtn>
     </SortWrapper>
-    <HotelsWrapper>
+    <FavouritesWrapper>
       {hotels.map(hotel => (
         <HotelInfo
           imgRemove
@@ -104,8 +104,8 @@ const Favorites = ({ hotels, filters }) => (
           days={filters.days}
         />
       ))}
-    </HotelsWrapper>
-  </StyledForm>
+    </FavouritesWrapper>
+  </Base>
 );
 
 const mapStateToProps = state => ({
