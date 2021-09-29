@@ -23,7 +23,7 @@ const Photos = ({ photos }) => (
 );
 
 const mapStateToProps = state => ({
-  photos: state.photos.photos,
+  photos: state.photos,
 });
 
 export default connect(mapStateToProps, null)(Photos);
