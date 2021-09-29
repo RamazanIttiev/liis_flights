@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 35px;
-  background: ${props => props.theme.palette.secondary};
+  background: ${props => props.theme.palette.background};
 `;
 
 const Container = styled.div`
