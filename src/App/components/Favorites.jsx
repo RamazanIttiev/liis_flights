@@ -74,7 +74,7 @@ const HotelsWrapper = styled.div`
   }
 `;
 
-const Favorites = ({ favourites, filters }) => (
+const Favorites = ({ hotels, filters }) => (
   <StyledForm>
     <Title>Избранное</Title>
     <SortWrapper>
@@ -94,14 +94,14 @@ const Favorites = ({ favourites, filters }) => (
       </SortBtn>
     </SortWrapper>
     <HotelsWrapper>
-      {favourites.map(hotel => (
+      {hotels.map(hotel => (
         <HotelInfo
           imgRemove
           key={hotel.hotelId}
-          isFavourite={favourites.length > 0 && favourites.indexOf(hotel.hotelId) === -1}
+          isFavourite
           hotel={hotel}
           checkInDate={checkInDate(filters.checkIn)}
-          days={filters.days || 1}
+          days={filters.days}
         />
       ))}
     </HotelsWrapper>
@@ -109,8 +109,8 @@ const Favorites = ({ favourites, filters }) => (
 );
 
 const mapStateToProps = state => ({
-  favourites: state.favourites.favourites,
-  filters: state.filters.filters,
+  hotels: state.hotels.filter(hotel => state.favourites.indexOf(hotel.hotelId) >= 0),
+  filters: state.filters,
 });
 
 export default connect(mapStateToProps, null)(Favorites);
