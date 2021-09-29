@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { Rating } from '@mui/material';
 import House from '../../assets/House.svg';
 import Heart from '../../assets/Heart.svg';
 import Dash from '../../assets/Dash.svg';
@@ -51,6 +52,15 @@ const Info = styled.div`
 
   img {
     margin: 0 12px;
+  }
+
+  .css-ryrseu-MuiRating-root {
+    color: #cdbc1e;
+    margin-top: 5px;
+
+    svg {
+      width: 17px;
+    }
   }
 `;
 
@@ -108,7 +118,7 @@ const Price = styled.div`
 `;
 
 const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
-  const { hotelName, priceFrom, hotelId } = hotel;
+  const { hotelName, priceFrom, hotelId, stars } = hotel;
 
   const dispatch = useDispatch();
 
@@ -130,6 +140,7 @@ const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
           <DashImg src={Dash} alt="" />
           {days}
         </Date>
+        <Rating name="read-only" value={stars} readOnly />
       </Info>
       <Box>
         <HeartImg onClick={handleClick} src={Heart} colored={isFavourite} alt="" />
