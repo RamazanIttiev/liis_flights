@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import Photos from './Photos';
 import HotelInfo from './HotelInfo';
 import Arrow from '../../assets/Arrow_small.svg';
-import getHotels from '../../services';
 import { checkInDate } from '../../utils';
 
 const Base = styled.div`
@@ -49,7 +47,7 @@ const HotelsWrapper = styled.div`
   margin-top: 40px;
   max-height: 520px;
   overflow: auto;
-  padding-right: 10px;
+  padding-right: 30px;
 
   ::-webkit-scrollbar {
     width: 2px;
@@ -79,76 +77,48 @@ const Favourite = styled.div`
   }
 `;
 
-const NoHotels = styled.p`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 17px;
-  color: ${props => props.theme.palette.primary};
-`;
+// const NoHotels = styled.p`
+//   font-style: normal;
+//   font-weight: normal;
+//   font-size: 17px;
+//   color: ${props => props.theme.palette.primary};
+// `;
 
-const Hotels = ({ hotels, favourites, filters }) => {
-  const dispatch = useDispatch();
-  const [result, setResult] = useState(true);
-
-  const [initialFilters, setInitialFilters] = useState({
-    location: 'Moscow',
-    checkIn: new Date().toLocaleDateString('fr-CA'),
-    checkOut: '2021-10-03',
-    days: 1,
-  });
-
-  useEffect(async () => {
-    try {
-      const allHotels = await getHotels(initialFilters);
-      const response = await allHotels.json();
-
-      dispatch({ type: 'SET_HOTELS', payload: response });
-    } catch (e) {
-      // Исправить
-      console.log(e);
-      setResult(false);
-    }
-  }, []);
-
-  return (
-    <Base>
-      <SearchInfo>
-        <Title>
-          Отели <ArrowImg src={Arrow} />
-          {filters.location || initialFilters.location}
-        </Title>
-        <CheckIn>{checkInDate(filters.checkIn)}</CheckIn>
-      </SearchInfo>
-      <Photos />
-      <>
-        <Favourite>
-          Добавлено в Избранное: <span>{favourites.length} </span>
-          рейсов
-        </Favourite>
-        <HotelsWrapper>
-          {result ? (
-            hotels.map(hotel => (
-              <HotelInfo
-                key={hotel.hotelId}
-                isFavourite={hotels.length > 0 && favourites.indexOf(hotel.hotelId) >= 0}
-                hotel={hotel}
-                checkInDate={checkInDate(filters.checkIn)}
-                days={filters.days || initialFilters.days}
-              />
-            ))
-          ) : (
-            <NoHotels>Поиск не дал результатов</NoHotels>
-          )}
-        </HotelsWrapper>
-      </>
-    </Base>
-  );
-};
+const Hotels = ({ hotels, favourites, filters }) => (
+  <Base>
+    <SearchInfo>
+      <Title>
+        Отели <ArrowImg src={Arrow} />
+        {filters.location}
+      </Title>
+      <CheckIn>{checkInDate(filters.checkIn)}</CheckIn>
+    </SearchInfo>
+    <Photos />
+    <>
+      <Favourite>
+        Добавлено в Избранное: <span>{favourites.length} </span>
+        рейсов
+      </Favourite>
+      <HotelsWrapper>
+        {hotels.length > 0 &&
+          hotels.map(hotel => (
+            <HotelInfo
+              key={hotel.hotelId}
+              isFavourite={favourites.indexOf(hotel.hotelId) >= 0}
+              hotel={hotel}
+              checkInDate={checkInDate(filters.checkIn)}
+              days={filters.days}
+            />
+          ))}
+      </HotelsWrapper>
+    </>
+  </Base>
+);
 
 const mapStateToProps = state => ({
-  hotels: state.hotels.hotels,
-  favourites: state.favourites.favourites,
-  filters: state.filters.filters,
+  hotels: state.hotels,
+  favourites: state.favourites,
+  filters: state.filters,
 });
 
 export default connect(mapStateToProps, null)(Hotels);

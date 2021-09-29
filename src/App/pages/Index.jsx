@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { connect, useDispatch } from 'react-redux';
 import useRouter from '../../hooks/useRouter';
 import Filter from '../components/Filter';
 import Hotels from '../components/Hotels';
 import Favorites from '../components/Favorites';
 import Header from '../components/Header';
+import fetchHotels from '../store/services';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,8 +25,13 @@ const Aside = styled.div`
   margin-right: 24px;
 `;
 
-const Index = () => {
+const Index = ({ filters }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchHotels(dispatch, filters);
+  }, []);
 
   if (!localStorage.getItem('auth')) {
     router.push('/');
@@ -43,4 +50,8 @@ const Index = () => {
   );
 };
 
-export default Index;
+const mapStateToProps = state => ({
+  filters: state.filters,
+});
+
+export default connect(mapStateToProps, null)(Index);
