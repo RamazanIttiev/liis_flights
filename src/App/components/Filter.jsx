@@ -74,6 +74,7 @@ const Filter = () => {
 
   const formSubmit = async data => {
     dispatch({ type: 'SET_HOTELS', payload: [] });
+    dispatch({ type: 'SET_FILTERS_TO_STORE', payload: {} });
 
     const myDate = new Date(data.checkIn);
     myDate.setDate(myDate.getDate() + +data.checkOut);
@@ -90,7 +91,7 @@ const Filter = () => {
       const response = await allHotels.json();
 
       dispatch({ type: 'SET_HOTELS', payload: response });
-      dispatch({ type: 'SET_FILTERS', payload: filters });
+      dispatch({ type: 'SET_FILTERS_TO_STORE', payload: filters });
     } catch (e) {
       console.error(e);
     }
