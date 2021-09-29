@@ -5,6 +5,7 @@ import Photos from './Photos';
 import HotelInfo from './HotelInfo';
 import Arrow from '../../assets/Arrow_small.svg';
 import getHotels from '../../services';
+import { checkInDate } from '../../utils';
 
 const Base = styled.div`
   order: 2;
@@ -45,7 +46,7 @@ const CheckIn = styled.div`
 
 const HotelsWrapper = styled.div`
   min-height: 100px;
-  margin-top: 22px;
+  margin-top: 40px;
   max-height: 520px;
   overflow: auto;
   padding-right: 10px;
@@ -78,15 +79,17 @@ const Favourite = styled.div`
   }
 `;
 
-// const NoHotels = styled.p`
-//   font-style: normal;
-//   font-weight: normal;
-//   font-size: 17px;
-//   color: ${props => props.theme.palette.primary};
-// `;
+const NoHotels = styled.p`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  color: ${props => props.theme.palette.primary};
+`;
 
 const Hotels = ({ hotels, favourites, filters }) => {
   const dispatch = useDispatch();
+  const [result, setResult] = useState(true);
+
   const [initialFilters, setInitialFilters] = useState({
     location: 'Moscow',
     checkIn: new Date().toLocaleDateString('fr-CA'),
@@ -101,20 +104,12 @@ const Hotels = ({ hotels, favourites, filters }) => {
 
       dispatch({ type: 'SET_HOTELS', payload: response });
     } catch (e) {
-      console.error(e);
+      // Исправить
+      console.log(e);
+      setResult(false);
     }
   }, []);
 
-  const options = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
-
-  const checkInDate = new Date(filters.checkIn || initialFilters.checkIn).toLocaleDateString(
-    'fr-CA',
-    options,
-  );
   return (
     <Base>
       <SearchInfo>
@@ -122,7 +117,7 @@ const Hotels = ({ hotels, favourites, filters }) => {
           Отели <ArrowImg src={Arrow} />
           {filters.location || initialFilters.location}
         </Title>
-        <CheckIn>{checkInDate}</CheckIn>
+        <CheckIn>{checkInDate(filters.checkIn)}</CheckIn>
       </SearchInfo>
       <Photos />
       <>
@@ -131,15 +126,19 @@ const Hotels = ({ hotels, favourites, filters }) => {
           рейсов
         </Favourite>
         <HotelsWrapper>
-          {hotels.map(hotel => (
-            <HotelInfo
-              key={hotel.hotelId}
-              isFavourite={hotels.length > 0 && favourites.indexOf(hotel.hotelId) >= 0}
-              hotel={hotel}
-              checkInDate={checkInDate}
-              days={filters.days || initialFilters.days}
-            />
-          ))}
+          {result ? (
+            hotels.map(hotel => (
+              <HotelInfo
+                key={hotel.hotelId}
+                isFavourite={hotels.length > 0 && favourites.indexOf(hotel.hotelId) >= 0}
+                hotel={hotel}
+                checkInDate={checkInDate(filters.checkIn)}
+                days={filters.days || initialFilters.days}
+              />
+            ))
+          ) : (
+            <NoHotels>Поиск не дал результатов</NoHotels>
+          )}
         </HotelsWrapper>
       </>
     </Base>
