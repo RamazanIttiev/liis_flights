@@ -7,6 +7,8 @@ import HotelInfo from './HotelInfo';
 import ArrowUp from '../../assets/arrowUp.svg';
 import ArrowDown from '../../assets/arrowDown.svg';
 
+import { checkInDate } from '../../utils';
+
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -47,7 +49,32 @@ const Arrows = styled.div`
   flex-direction: column;
 `;
 
-const Favorites = ({ favourites }) => (
+const HotelsWrapper = styled.div`
+  min-height: 100px;
+  margin-top: 40px;
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 10px;
+
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.palette.main};
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #e7e7e7;
+  }
+`;
+
+const Favorites = ({ favourites, filters }) => (
   <StyledForm>
     <Title>Избранное</Title>
     <SortWrapper>
@@ -66,18 +93,24 @@ const Favorites = ({ favourites }) => (
         </Arrows>
       </SortBtn>
     </SortWrapper>
-    {/* {favourites.map(hotelId => (
-      <HotelInfo
-        key={hotelId}
-        isFavourite={favourites.length > 0 && favourites.indexOf(hotelId) === -1}
-        hotelId={hotelId}
-      />
-    ))} */}
+    <HotelsWrapper>
+      {favourites.map(hotel => (
+        <HotelInfo
+          imgRemove
+          key={hotel.hotelId}
+          isFavourite={favourites.length > 0 && favourites.indexOf(hotel.hotelId) === -1}
+          hotel={hotel}
+          checkInDate={checkInDate(filters.checkIn)}
+          days={filters.days || 1}
+        />
+      ))}
+    </HotelsWrapper>
   </StyledForm>
 );
 
 const mapStateToProps = state => ({
   favourites: state.favourites.favourites,
+  filters: state.filters.filters,
 });
 
 export default connect(mapStateToProps, null)(Favorites);

@@ -8,8 +8,9 @@ import Dash from '../../assets/Dash.svg';
 
 const Wrapper = styled.div`
   position: relative;
-  display: grid;
-  grid-template-columns: 13% 65% 22%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: normal;
@@ -30,9 +31,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const PlaneImg = styled.div`
+const HotelImg = styled.div`
   width: 64px;
   height: 64px;
+  margin-right: 24px;
   background: rgba(0, 119, 255, 0.05);
   border-radius: 50%;
   display: flex;
@@ -46,6 +48,7 @@ const PlaneImg = styled.div`
 `;
 
 const Info = styled.div`
+  display: flex;
   line-height: 22px;
   font-size: 17px;
   cursor: pointer;
@@ -73,7 +76,10 @@ const Date = styled.div`
   color: ${props => props.theme.palette.grey};
 `;
 
+const HotelData = styled.div``;
+
 const HotelName = styled.div`
+  width: 90%;
   font-family: Roboto;
   font-style: normal;
   font-weight: 300;
@@ -81,14 +87,17 @@ const HotelName = styled.div`
   color: ${props => props.theme.palette.primary};
 `;
 
-const Box = styled.div`
+const PriceWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: end;
+  height: 100%;
 `;
 
 const HeartImg = styled.img`
+  position: absolute;
+  top: 0;
   cursor: pointer;
   width: 21px;
   height: 18px;
@@ -103,9 +112,12 @@ const HeartImg = styled.img`
 `;
 
 const Price = styled.div`
+  position: absolute;
+  bottom: 0;
+  font-size: 11px;
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  align-items: center;
+
   color: ${props => props.theme.palette.grey};
   span {
     font-family: Roboto;
@@ -114,10 +126,11 @@ const Price = styled.div`
     font-size: 17px;
     font-weight: 400;
     color: initial;
+    margin-left: 8px;
   }
 `;
 
-const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
+const HotelInfo = ({ isFavourite, hotel, checkInDate, days, imgRemove }) => {
   const { hotelName, priceFrom, hotelId, stars } = hotel;
 
   const dispatch = useDispatch();
@@ -130,24 +143,28 @@ const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
 
   return (
     <Wrapper>
-      <PlaneImg>
-        <img src={House} alt="" />
-      </PlaneImg>
       <Info>
-        <HotelName>{hotelName}</HotelName>
-        <Date>
-          {checkInDate}
-          <DashImg src={Dash} alt="" />
-          {days}
-        </Date>
-        <Rating name="read-only" value={stars} readOnly />
+        {!imgRemove && (
+          <HotelImg>
+            <img src={House} alt="" />
+          </HotelImg>
+        )}
+        <HotelData>
+          <HotelName>{hotelName}</HotelName>
+          <Date>
+            {checkInDate}
+            <DashImg src={Dash} alt="" />
+            {days}
+          </Date>
+          <Rating name="read-only" value={stars} readOnly />
+        </HotelData>
       </Info>
-      <Box>
+      <PriceWrapper>
         <HeartImg onClick={handleClick} src={Heart} colored={isFavourite} alt="" />
         <Price>
           Price: <span>{priceFrom} ₽</span>
         </Price>
-      </Box>
+      </PriceWrapper>
     </Wrapper>
   );
 };
