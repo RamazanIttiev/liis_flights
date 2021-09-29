@@ -1,14 +1,9 @@
-const initialState = {
-  hotels: [],
-};
+const initialState = [];
 
 const hotels = (state = initialState, action) => {
   switch (action.type) {
     case 'HOTELS':
-      return {
-        ...state,
-        hotels: action.payload,
-      };
+      return action.payload;
     default:
       return state;
   }
