@@ -1,7 +1,10 @@
+const myDate = new Date(new Date().toLocaleDateString('fr-CA'));
+myDate.setDate(myDate.getDate() + 1);
+
 const initialState = {
   location: 'Moscow',
   checkIn: new Date().toLocaleDateString('fr-CA'),
-  checkOut: '2021-10-03',
+  checkOut: myDate.toLocaleDateString('fr-CA'),
   days: 1,
 };
 
