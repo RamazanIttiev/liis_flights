@@ -70,7 +70,11 @@ const StyledButton = styled.button`
 const Filter = () => {
   const dispatch = useDispatch();
 
-  const { handleSubmit, register } = useForm();
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm();
 
   const formSubmit = async data => {
     dispatch({ type: 'SET_HOTELS', payload: [] });
@@ -99,16 +103,27 @@ const Filter = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit(formSubmit)}>
-      <Label>Локация</Label>
-      <Input {...register('location')} defaultValue="Moscow" type="text" />
-      <Label>Дата заселения</Label>
+      <Label error={errors.location}>Локация</Label>
       <Input
-        {...register('checkIn')}
+        error={errors.location}
+        {...register('location', { required: true })}
+        defaultValue="Moscow"
+        type="text"
+      />
+      <Label error={errors.checkIn}>Дата заселения</Label>
+      <Input
+        error={errors.checkIn}
+        {...register('checkIn', { required: true })}
         defaultValue={new Date().toLocaleDateString('fr-CA')}
         type="date"
       />
-      <Label>Количество дней</Label>
-      <Input {...register('checkOut')} defaultValue="1" type="number" />
+      <Label error={errors.checkOut}>Количество дней</Label>
+      <Input
+        error={errors.checkOut}
+        {...register('checkOut', { required: true })}
+        defaultValue="1"
+        type="number"
+      />
       <StyledButton type="submit">Найти</StyledButton>
     </StyledForm>
   );
