@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import getHotels from '../../services';
+import fetchHotels from '../store/services';
 
 const StyledForm = styled.form`
   display: flex;
@@ -29,10 +29,11 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+  padding: 8px;
+  height: 50px;
   border: 1px solid #c9cacc;
   box-sizing: border-box;
   border-radius: 4px;
-  height: 34px;
   border: ${props => props.error && '1px solid #EB1717'};
   box-sizing: border-box;
   box-shadow: 0px 0px 4px rgba(235, 23, 23, 0.2);
@@ -77,9 +78,6 @@ const Filter = () => {
   } = useForm();
 
   const formSubmit = async data => {
-    dispatch({ type: 'SET_HOTELS', payload: [] });
-    dispatch({ type: 'SET_FILTERS_TO_STORE', payload: {} });
-
     const myDate = new Date(data.checkIn);
     myDate.setDate(myDate.getDate() + +data.checkOut);
 
@@ -90,15 +88,9 @@ const Filter = () => {
       days: +data.checkOut,
     };
 
-    try {
-      const allHotels = await getHotels(filters);
-      const response = await allHotels.json();
+    fetchHotels(dispatch, filters);
 
-      dispatch({ type: 'SET_HOTELS', payload: response });
-      dispatch({ type: 'SET_FILTERS_TO_STORE', payload: filters });
-    } catch (e) {
-      console.error(e);
-    }
+    dispatch({ type: 'SET_FILTERS_TO_STORE', payload: filters });
   };
 
   return (
