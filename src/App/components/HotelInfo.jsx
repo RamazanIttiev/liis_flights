@@ -8,7 +8,7 @@ import Dash from '../../assets/Dash.svg';
 const Wrapper = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 13% 70% 17%;
+  grid-template-columns: 13% 65% 22%;
   font-family: 'Source Sans Pro';
   font-style: normal;
   font-weight: normal;
@@ -93,22 +93,29 @@ const HeartImg = styled.img`
 `;
 
 const Price = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   color: ${props => props.theme.palette.grey};
   span {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
     font-weight: 400;
     color: initial;
   }
 `;
 
 const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
-  const { hotelName, priceFrom } = hotel;
+  const { hotelName, priceFrom, hotelId } = hotel;
 
   const dispatch = useDispatch();
 
   const handleClick = () => {
     if (!isFavourite) {
-      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotel });
-    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotel });
+      dispatch({ type: 'ADD_TO_FAVOURITE', payload: hotelId });
+    } else dispatch({ type: 'REMOVE__FROM_FAVOURITE', payload: hotelId });
   };
 
   return (
@@ -127,7 +134,7 @@ const HotelInfo = ({ isFavourite, hotel, checkInDate, days }) => {
       <Box>
         <HeartImg onClick={handleClick} src={Heart} colored={isFavourite} alt="" />
         <Price>
-          Price: <span>{priceFrom}</span>
+          Price: <span>{priceFrom} ₽</span>
         </Price>
       </Box>
     </Wrapper>
