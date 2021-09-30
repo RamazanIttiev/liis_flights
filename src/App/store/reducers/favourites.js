@@ -1,7 +1,7 @@
 const initialState = {
   data: [],
+  sort: null,
   sortOrder: false,
-  sortName: null,
 };
 
 const favourites = (state = initialState, action) => {
