@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
 import HotelInfo from './HotelInfo';
@@ -7,7 +7,7 @@ import HotelInfo from './HotelInfo';
 import ArrowUp from '../../assets/arrowUp.svg';
 import ArrowDown from '../../assets/arrowDown.svg';
 
-import { checkInDate } from '../../utils';
+import { checkInDate, SORT_RATING, SORT_PRICE } from '../../utils';
 
 const Base = styled.form`
   display: flex;
@@ -74,43 +74,61 @@ const FavouritesWrapper = styled.div`
   }
 `;
 
-const Favorites = ({ hotels, filters }) => (
-  <Base>
-    <Title>Избранное</Title>
-    <SortWrapper>
-      <SortBtn>
-        Рейтинг
-        <Arrows>
-          <img src={ArrowUp} alt="" />
-          <img src={ArrowDown} alt="" />
-        </Arrows>
-      </SortBtn>
-      <SortBtn>
-        Цена
-        <Arrows>
-          <img src={ArrowUp} alt="" />
-          <img src={ArrowDown} alt="" />
-        </Arrows>
-      </SortBtn>
-    </SortWrapper>
-    <FavouritesWrapper>
-      {hotels.map(hotel => (
-        <HotelInfo
-          imgRemove
-          key={hotel.hotelId}
-          isFavourite
-          hotel={hotel}
-          checkInDate={checkInDate(filters.checkIn)}
-          days={filters.days}
-        />
-      ))}
-    </FavouritesWrapper>
-  </Base>
-);
+const Favorites = ({ hotels, filters, favourites }) => {
+  const dispatch = useDispatch();
+
+  const handleSort = sortName => () => {
+    dispatch({ type: 'SORT', payload: sortName });
+  };
+
+  const favouriteHotels = hotels
+    .slice()
+    .sort((a, b) =>
+      favourites.sortOrder
+        ? a[favourites.sort] - b[favourites.sort]
+        : b[favourites.sort] - a[favourites.sort],
+    )
+    .filter(hotel => favourites.data.indexOf(hotel.hotelId) >= 0);
+
+  return (
+    <Base>
+      <Title>Избранное</Title>
+      <SortWrapper>
+        <SortBtn onClick={handleSort(SORT_RATING)}>
+          Рейтинг
+          <Arrows>
+            <img src={ArrowUp} alt="" />
+            <img src={ArrowDown} alt="" />
+          </Arrows>
+        </SortBtn>
+        <SortBtn onClick={handleSort(SORT_PRICE)}>
+          Цена
+          <Arrows>
+            <img src={ArrowUp} alt="" />
+            <img src={ArrowDown} alt="" />
+          </Arrows>
+        </SortBtn>
+      </SortWrapper>
+      <FavouritesWrapper>
+        {favouriteHotels.map(hotel => (
+          <HotelInfo
+            imgRemove
+            key={hotel.hotelId}
+            isFavourite
+            hotel={hotel}
+            checkInDate={checkInDate(filters.checkIn)}
+            days={filters.days}
+          />
+        ))}
+      </FavouritesWrapper>
+    </Base>
+  );
+};
 
 const mapStateToProps = state => ({
-  hotels: state.hotels.filter(hotel => state.favourites.indexOf(hotel.hotelId) >= 0),
+  hotels: state.hotels,
   filters: state.filters,
+  favourites: state.favourites,
 });
 
 export default connect(mapStateToProps, null)(Favorites);

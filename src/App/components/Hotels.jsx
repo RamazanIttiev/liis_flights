@@ -117,7 +117,7 @@ const Hotels = ({ hotels, favourites, filters }) => (
 
 const mapStateToProps = state => ({
   hotels: state.hotels,
-  favourites: state.favourites,
+  favourites: state.favourites.data,
   filters: state.filters,
 });
 

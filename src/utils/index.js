@@ -9,3 +9,6 @@ export const checkInDate = filtersDate =>
     'fr-CA',
     options,
   );
+
+export const SORT_PRICE = 'priceFrom';
+export const SORT_RATING = 'stars';
