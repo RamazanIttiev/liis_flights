@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MainBgr from '../../assets/MainBgr.jpg';
-import Form from '../components/Form';
+import LoginForm from '../components/LoginForm';
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,7 +14,8 @@ const Background = styled.img`
   position: absolute;
   width: 100%;
   height: 100%;
-  filter: blur(10px);
+  filter: blur(5px);
+  opacity: 0.7;
 `;
 
 const LoginBox = styled.div`
@@ -40,8 +41,8 @@ const Login = () => (
   <Wrapper>
     <Background src={MainBgr} alt="" />
     <LoginBox>
-      <Title>Simple Flight Check</Title>
-      <Form />
+      <Title>Simple Hotel Check</Title>
+      <LoginForm />
     </LoginBox>
   </Wrapper>
 );

@@ -1,16 +1,25 @@
-import React from 'react';
 import styled from 'styled-components';
 import SignOut from '../../assets/LogOut.svg';
 import useRouter from '../../hooks/useRouter';
 
-const LogOut = styled.div`
-  cursor: pointer;
-  position: absolute;
-  top: 26px;
-  right: 31px;
+const Base = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
+`;
+
+const Title = styled.h1`
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+`;
+
+const LogOut = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
   color: ${props => props.theme.palette.main};
   font-style: normal;
   font-weight: normal;
@@ -21,20 +30,23 @@ const LogOutImg = styled.img`
   margin-left: 20px;
 `;
 
-const Logout = () => {
+const Header = () => {
   const router = useRouter();
 
-  const logOut = () => {
+  const handleClick = () => {
     localStorage.removeItem('userData');
     localStorage.removeItem('auth');
     router.push('/');
   };
 
   return (
-    <LogOut onClick={logOut}>
-      Выйти <LogOutImg src={SignOut} />
-    </LogOut>
+    <Base>
+      <Title>Simple Hotel Check</Title>
+      <LogOut onClick={handleClick}>
+        Выйти <LogOutImg src={SignOut} />
+      </LogOut>
+    </Base>
   );
 };
 
-export default Logout;
+export default Header;

@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
-import Flights from './pages/Flights';
+import Index from './pages/Index';
 import Login from './pages/Login';
 
 const App = () => (
@@ -8,8 +8,8 @@ const App = () => (
       <Route exact path="/">
         <Login />
       </Route>
-      <Route exact path="/flights">
-        <Flights />
+      <Route exact path="/hotels">
+        <Index />
       </Route>
     </Switch>
   </>

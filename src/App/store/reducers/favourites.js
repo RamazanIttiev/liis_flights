@@ -1,5 +1,7 @@
 const initialState = {
-  favourites: [],
+  data: [],
+  sort: null,
+  sortOrder: false,
 };
 
 const favourites = (state = initialState, action) => {
@@ -7,12 +9,18 @@ const favourites = (state = initialState, action) => {
     case 'ADD_FAVOURITE':
       return {
         ...state,
-        favourites: [...state.favourites, action.payload],
+        data: [...state.data, action.payload],
       };
     case 'REMOVE_FAVOURITE':
       return {
         ...state,
-        favourites: state.favourites.filter(PlaceId => PlaceId !== action.payload),
+        data: state.data.filter(hotelId => hotelId !== action.payload),
+      };
+    case 'SORT':
+      return {
+        ...state,
+        sortOrder: !state.sortOrder,
+        sort: action.payload,
       };
     default:
       return state;

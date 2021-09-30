@@ -8,22 +8,22 @@ const Wrapper = styled.div`
   margin: 24px 0 31px;
 `;
 
-const Slide = styled.img`
+const Photo = styled.img`
   width: 164px;
   height: 149px;
   margin-right: 12px;
 `;
 
-const Slider = ({ slides }) => (
+const Photos = ({ photos }) => (
   <Wrapper>
-    {slides.map(item => (
-      <Slide key={item.id} src={item.img} />
+    {photos.map(item => (
+      <Photo key={item.id} src={item.img} />
     ))}
   </Wrapper>
 );
 
 const mapStateToProps = state => ({
-  slides: state.slides.slides,
+  photos: state.photos,
 });
 
-export default connect(mapStateToProps, null)(Slider);
+export default connect(mapStateToProps, null)(Photos);

@@ -30,7 +30,8 @@ const Input = styled.input`
   border: 1px solid #c9cacc;
   box-sizing: border-box;
   border-radius: 4px;
-  height: 34px;
+  padding: 8px;
+  height: 50px;
   border: ${props => props.error && '1px solid #EB1717'};
   box-sizing: border-box;
   box-shadow: 0px 0px 4px rgba(235, 23, 23, 0.2);
@@ -62,7 +63,7 @@ const StyledButton = styled.button`
   font-weight: normal;
   font-size: 16px;
   color: #fff;
-  background: linear-gradient(104.34deg, #3c4cad -15.34%, #00c3ff 145.95%);
+  background: linear-gradient(104.34deg, #41522e -15.34%, #be8022 145.95%);
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
 
@@ -75,7 +76,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Form = () => {
+const LoginForm = () => {
   const {
     register,
     formState: { errors },
@@ -87,7 +88,7 @@ const Form = () => {
   const formSubmit = data => {
     localStorage.setItem('userData', JSON.stringify(data));
     localStorage.setItem('auth', true);
-    router.push('/flights');
+    router.push('/hotels');
   };
 
   return (
@@ -118,4 +119,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default LoginForm;
