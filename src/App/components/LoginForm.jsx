@@ -30,7 +30,8 @@ const Input = styled.input`
   border: 1px solid #c9cacc;
   box-sizing: border-box;
   border-radius: 4px;
-  height: 34px;
+  padding: 8px;
+  height: 50px;
   border: ${props => props.error && '1px solid #EB1717'};
   box-sizing: border-box;
   box-shadow: 0px 0px 4px rgba(235, 23, 23, 0.2);
