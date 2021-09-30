@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
@@ -49,6 +49,19 @@ const Arrows = styled.div`
   flex-direction: column;
 `;
 
+const RatingUp = styled.img`
+  opacity: ${props => (props.active ? '0.3' : '1')};
+`;
+const RatingDown = styled.img`
+  opacity: ${props => (props.active ? '1' : '0.3')};
+`;
+const StarsUp = styled.img`
+  opacity: ${props => (props.active ? '0.3' : '1')};
+`;
+const StarsDown = styled.img`
+  opacity: ${props => (props.active ? '1' : '0.3')};
+`;
+
 const FavouritesWrapper = styled.div`
   min-height: 289px;
   margin-top: 40px;
@@ -77,8 +90,20 @@ const FavouritesWrapper = styled.div`
 const Favorites = ({ hotels, filters, favourites }) => {
   const dispatch = useDispatch();
 
-  const handleSort = sortName => () => {
-    dispatch({ type: 'SORT', payload: sortName });
+  const [sortRating, setSortRating] = useState(false);
+  const [sortPrice, setSortPrice] = useState(true);
+
+  const handleSort = sortName => event => {
+    dispatch({
+      type: 'SORT',
+      payload: sortName,
+    });
+    if (event.target.innerText === 'Рейтинг') {
+      setSortRating(!sortRating);
+    }
+    if (event.target.innerText === 'Цена') {
+      setSortPrice(!sortPrice);
+    }
   };
 
   const favouriteHotels = hotels
@@ -94,18 +119,18 @@ const Favorites = ({ hotels, filters, favourites }) => {
     <Base>
       <Title>Избранное</Title>
       <SortWrapper>
-        <SortBtn onClick={handleSort(SORT_RATING)}>
+        <SortBtn onClick={event => handleSort(SORT_RATING)(event)}>
           Рейтинг
           <Arrows>
-            <img src={ArrowUp} alt="" />
-            <img src={ArrowDown} alt="" />
+            <RatingUp active={sortRating} src={ArrowUp} alt="" />
+            <RatingDown active={sortRating} src={ArrowDown} alt="" />
           </Arrows>
         </SortBtn>
-        <SortBtn onClick={handleSort(SORT_PRICE)}>
+        <SortBtn onClick={event => handleSort(SORT_PRICE)(event)}>
           Цена
           <Arrows>
-            <img src={ArrowUp} alt="" />
-            <img src={ArrowDown} alt="" />
+            <StarsUp active={sortPrice} src={ArrowUp} alt="" />
+            <StarsDown active={sortPrice} src={ArrowDown} alt="" />
           </Arrows>
         </SortBtn>
       </SortWrapper>
